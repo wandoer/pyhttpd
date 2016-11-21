@@ -52,7 +52,7 @@ BUFSZ = 10240			#支持最大 Request 长度
 		
 STATICPATH = './template/'	#静态资源路径
 
-STATUS_CODE = {200:'OK',404:'Not Found',500:'InternalServerError'} #定义状态码及状态描述
+STATUS_CODE = {200:'OK',400:'Params Error',404:'Not Found',500:'InternalServerError'} #定义状态码及状态描述
 
 #======================= main =======================
 
