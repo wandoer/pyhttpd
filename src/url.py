@@ -29,5 +29,6 @@ urlMapper = {
     '/':            urlidx(view.index,temppath + 'index.html'),
     '/index/':       urlidx(view.index,temppath + 'index.html'),
     '/index.html/':  urlidx(view.index,temppath + 'index.html'),
-    '/welcome.html': urlidx(view.welcome,temppath + 'welcome.html')
+    '/welcome.html': urlidx(view.welcome,temppath + 'welcome.html'),
+    '/testpost.html':urlidx(view.testpost,temppath + 'testpost.html')
 }

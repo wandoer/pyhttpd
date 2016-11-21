@@ -8,8 +8,10 @@
 Http request
 '''
 
+import io
+
 class request:
-    METHOD = ["GET"]
+    METHOD = ['GET','POST']
 
     def __init__(self,data):
         self.__params = {}
@@ -40,6 +42,8 @@ class request:
 
         if arr[0] == 'GET':
             self.__initGETparams(arr[1])
+        elif arr[0] == 'POST':
+            self.__initPOSTparams(arr[1],data)
     
     def __initGETparams(self,uri):
         if '?' in uri:
@@ -54,6 +58,33 @@ class request:
                     self.__params[par[0]] = par[1]
         else:
             self.__uri = uri
+
+    def __initPOSTparams(self,uri,data):
+        self.__uri = uri
+        f = io.StringIO(unicode(data))
+        line = f.readline()
+        while True:
+            if (line == '\r\n') or (len(line) == 0):
+                break
+            line = f.readline()
+        
+        if not line:
+            return 
+        
+        line = f.readline()
+        while line:
+            print line,'!~~'
+            params = []
+            if '&' in line:
+                params.append(line.split('&'))
+            else:
+                params.append(line)
+            for p in params:
+                par  = p.split('=')
+                if len(par) != 2:
+                    continue
+                self.__params[par[0]] = par[1]
+            line = f.readline()
 
 
     def getMethod(self):

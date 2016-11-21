@@ -23,3 +23,8 @@ def welcome(request,template):
     else:
         rd = render.render(request,None,template)
         return rd.rend()
+
+def testpost(request,template):
+    print request.getParams()
+    rd = render.render(request,None, template)
+    return rd.rend()
