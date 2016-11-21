@@ -73,7 +73,6 @@ class request:
         
         line = f.readline()
         while line:
-            print line,'!~~'
             params = []
             if '&' in line:
                 params.append(line.split('&'))

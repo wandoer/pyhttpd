@@ -34,7 +34,6 @@ class render:
        self.__response = response.Response()
 
     def rend(self):
-        print 'rend--'
         if self.__template == None or self.__template == '' or os.path.exists(self.__template) == False:
             param = {}
             param['pageurl'] = self.__request.getURI()

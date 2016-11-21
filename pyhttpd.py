@@ -56,31 +56,35 @@ STATUS_CODE = {200:'OK',400:'Params Error',404:'Not Found',500:'InternalServerEr
 
 #======================= main =======================
 
-ADDR = (HOST,PORT)
-skt = socket(AF_INET,SOCK_STREAM)		#建立socket
-skt.setsockopt(SOL_SOCKET,SO_REUSEADDR,1)	#设置地址复用
-skt.bind(ADDR)	#绑定地址
 
-skt.listen(5)
+if __name__ == '__main__':
+	ADDR = (HOST,PORT)
+	skt = socket(AF_INET,SOCK_STREAM)		#建立socket
+	skt.setsockopt(SOL_SOCKET,SO_REUSEADDR,1)	#设置地址复用
+	skt.bind(ADDR)	#绑定地址
 
-while True:
-	tcpClientSkt,addr = skt.accept()
-	print 'accept from [%s,%s]' % (str(addr[0]),str(addr[1]))
+	skt.listen(5)
+
+
+
 	while True:
-		try:
-			data = tcpClientSkt.recv(BUFSZ)
-		except Exception,e:
-			print 'Exception',e
+		tcpClientSkt,addr = skt.accept()
+		print 'accept from [%s,%s]' % (str(addr[0]),str(addr[1]))
+		while True:
+			try:
+				data = tcpClientSkt.recv(BUFSZ)
+			except Exception,e:
+				print 'Exception',e
+				tcpClientSkt.close()
+				break
+			if not data:
+				break
+			msg = '[%s] :\r\n%s' % (ctime(),data)
+			print msg
+
+			rsps = getResponse(data)
+
+			sendResponse(tcpClientSkt,rsps)
+
 			tcpClientSkt.close()
-			break
-		if not data:
-			break
-		msg = '[%s] :\r\n%s' % (ctime(),data)
-		print msg
-
-		rsps = getResponse(data)
-
-		sendResponse(tcpClientSkt,rsps)
-
-		tcpClientSkt.close()
-skt.close()
+	skt.close()
